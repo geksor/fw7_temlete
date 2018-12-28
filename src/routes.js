@@ -1,5 +1,6 @@
 import HomePage from './pages/home.f7.html';
 import AboutPage from './pages/about.f7.html';
+import ClergyPage from './pages/clergy.f7.html';
 import FormPage from './pages/form.f7.html';
 import DynamicRoutePage from './pages/dynamic-route.f7.html';
 import NotFoundPage from './pages/not-found.f7.html';
@@ -23,6 +24,10 @@ export default [
   {
     path: '/about/',
     component: AboutPage,
+  },
+  {
+    path: '/clergy/',
+    component: ClergyPage,
   },
   {
     path: '/form/',

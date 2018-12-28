@@ -1,0 +1,83 @@
+<template>
+  <div class="page">
+    <div class="navbar">
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="icon icon-back"></i>
+            <span class="if-ios">Back</span>
+          </a>
+        </div>
+        <div class="title">Clergy</div>
+      </div>
+    </div>
+    <div class="page-content hide-navbar-on-scroll">
+      {{#if clergies}}
+        <div class="row no-gap">
+          {{#each clergies}}
+          <div class="col-100 tablet-50 desktop-33">
+            <div class="card demo-card-header-pic">
+              <div data-background="http://lorempixel.com/1000/600/people/6/" class="card-header align-items-flex-end lazy lazy-fade-in">
+                <div class="preloaderWrap display-flex align-items-center justify-content-center" style="position: absolute;left:0;bottom:0;width: 100%;height: 100%;">
+                  <div class="preloader" style="width: 44px; height: 44px;"></div>
+                </div>
+                {{name}}
+              </div>
+              <div class="card-content card-content-padding">
+                <p class="date">{{email}}</p>
+                <p>
+                  {{address.street}} {{address.suite}} {{address.city}} {{address.zipcode}} {{address.phone}}
+                </p>
+              </div>
+              <div class="card-footer"><a href="#" class="link">Like</a><a href="#" class="link">Read more</a></div>
+            </div>
+          </div>
+          {{/each}}
+        </div>
+      {{/if}}
+    </div>
+  </div>
+</template>
+<style>
+  .demo-card-header-pic .card-header {
+    height: 40vw;
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    position: relative;
+  }
+  .demo-card-header-pic .card-content-padding .date{
+    color: #8e8e93;
+  }
+</style>
+
+<script>
+  import Dom7 from 'Dom7'
+  export default {
+      data: function () {
+          return {
+              clergies : null
+          }
+      },
+      on: {
+          pageInit: function () {
+              var self = this;
+              var app = self.$app;
+              app.preloader.show('blue');
+              // request user data on page init
+              app.request.get('https://jsonplaceholder.typicode.com/users', (data) => {
+                  // update component state with new state
+                  app.preloader.hide();
+                  app.lazy.create('lazy');
+                  self.$setState({
+                      clergies: JSON.parse(data),
+                  });
+              });
+          },
+          lazyLoaded: function (event) {
+              let $$ = Dom7;
+              $$(event.srcElement).children('.preloaderWrap').remove();
+          }
+      },
+  }
+</script>
